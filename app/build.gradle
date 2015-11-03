@@ -1,0 +1,18 @@
+apply plugin: 'com.android.model.application'
+
+model {
+    android {
+        compileSdkVersion = 23
+        buildToolsVersion = "23.0.2"
+    }
+    android.ndk {
+        moduleName = "native"
+        toolchain = "gcc"
+        toolchainVersion = "4.9"
+        cppFlags += "-std=c++11"
+        cppFlags += "-Werror"
+        cppFlags += "-g"
+        ldLibs    += ["log"]
+        stl = "stlport_static"
+    }
+}
