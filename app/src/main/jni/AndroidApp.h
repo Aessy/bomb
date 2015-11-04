@@ -13,7 +13,7 @@ class AndroidApp
 public:
     AndroidApp(ANativeActivity * activity);
 
-    void run();
+    virtual void run() = 0;
 
     void onDestroy();
     void onStart();
@@ -32,11 +32,9 @@ public:
 public:
     friend void startRunLoop(AndroidApp*);
 
-public:
+private:
     ANativeActivity * activity;
     AInputQueue * input_queue;
-
-private:
     pthread_t thread;
 };
 

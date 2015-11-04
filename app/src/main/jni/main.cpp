@@ -5,11 +5,13 @@
 #include "AndroidApp.h"
 #include "log.h"
 
+extern AndroidApp * createAndroidApplication(ANativeActivity * activity, void * saved_state, size_t saved_state_size);
+
 static AndroidApp * createAndroidApp(ANativeActivity* activity,
-                                     void*            savedState,
-                                     size_t           savedStateSize)
+                                     void*            saved_state,
+                                     size_t           saved_state_size)
 {
-    AndroidApp * android_app = new AndroidApp(activity);
+    AndroidApp * android_app = createAndroidApplication(activity, saved_state, saved_state_size);
     startRunLoop(android_app);
 
     return android_app;

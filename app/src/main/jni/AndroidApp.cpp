@@ -4,8 +4,6 @@
 
 #include "AndroidApp.h"
 
-#include <pthread.h>
-
 #include "log.h"
 
 static void * run_loop(void * app);
@@ -28,16 +26,6 @@ static void * run_loop(void * app)
 AndroidApp::AndroidApp(ANativeActivity *activity)
     : activity { activity }
 { }
-
-void AndroidApp::run()
-{
-    LOGI("Startin main loop");
-    while (1)
-    {
-        // Main loop.
-        // Here we will do polling, updating logic, drawing, etc...
-    }
-}
 
 void AndroidApp::onDestroy()
 {
@@ -104,5 +92,4 @@ void AndroidApp::onInputQueueDestroyed(AInputQueue * queue)
 {
     this->input_queue = nullptr;
     LOGI("On input queue destroyed.");
-
 }
