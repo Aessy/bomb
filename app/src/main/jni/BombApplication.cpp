@@ -8,6 +8,13 @@
 
 #include "log.h"
 
+#include "assimp/Importer.hpp"
+#include "assimp/scene.h"
+#include "assimp/mesh.h"
+
+#include <string>
+#include <future>
+
 AndroidApp * createAndroidApplication(ANativeActivity * activity, void * saved_state, size_t saved_state_size)
 {
     return new BombApplication(activity);
@@ -19,6 +26,9 @@ BombApplication::BombApplication(ANativeActivity *activity)
 
 void BombApplication::run()
 {
+    Assimp::Importer l;
+    auto scene = l.ReadFile("2123", 10);
+    scene->mMeshes[0]->
     LOGV("Running bomb application");
     while (1)
     {

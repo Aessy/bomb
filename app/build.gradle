@@ -12,7 +12,14 @@ model {
         cppFlags += "-std=c++11"
         cppFlags += "-Werror"
         cppFlags += "-g"
-        ldLibs    += ["log", "android", "EGL", "GLESv3"]
-        stl = "stlport_static"
+        ldLibs    += ["log", "android", "EGL", "GLESv3", "z", "assimp"]
+        stl = "gnustl_static"
+    }
+
+    android.productFlavors {
+        create("x86") {
+                ndk.abiFilters += "x86"
+                ndk.ldFlags += "-L/home/jens/dev/Bomb/app/libs/x86"
+        }
     }
 }
