@@ -26,9 +26,6 @@ BombApplication::BombApplication(ANativeActivity *activity)
 
 void BombApplication::run()
 {
-    Assimp::Importer l;
-    auto scene = l.ReadFile("2123", 10);
-    scene->mMeshes[0]->
     LOGV("Running bomb application");
     while (1)
     {
