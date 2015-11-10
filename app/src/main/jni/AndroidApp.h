@@ -31,9 +31,9 @@ public:
 
 public:
     friend void startRunLoop(AndroidApp*);
+    ANativeActivity * activity;
 
 private:
-    ANativeActivity * activity;
     AInputQueue * input_queue;
     pthread_t thread;
 };
