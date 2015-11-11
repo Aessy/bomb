@@ -6,6 +6,11 @@
 
 #include "log.h"
 
+#include "GLContext.h"
+
+#include <chrono>
+#include <thread>
+
 static void * run_loop(void * app);
 
 void startRunLoop(AndroidApp * app)
@@ -23,8 +28,10 @@ static void * run_loop(void * app)
 }
 
 
-AndroidApp::AndroidApp(ANativeActivity *activity)
+AndroidApp::AndroidApp(ANativeActivity *activity, std::shared_ptr<Application> app)
     : activity { activity }
+    , application { app }
+    , gl_context { nullptr }
 { }
 
 void AndroidApp::onDestroy()
@@ -71,12 +78,16 @@ void AndroidApp::onWindowFocusChanged(int has_focus)
 
 void AndroidApp::onNativeWindowCreated(ANativeWindow * window)
 {
+    this->window = window;
     LOGI("On native window created");
+    gl_context = std::unique_ptr<GLContext>(new GLContext(window));
 }
 
 void AndroidApp::onNativeWindowDestroyed(ANativeWindow * window)
 {
     // Must stop drawing to window before returning from function
+    gl_context.reset(nullptr);
+    this->window = nullptr;
     LOGI("On native window destroyed");
 }
 void AndroidApp::onInputQueueCreated(AInputQueue * queue)
@@ -92,4 +103,17 @@ void AndroidApp::onInputQueueDestroyed(AInputQueue * queue)
 {
     this->input_queue = nullptr;
     LOGI("On input queue destroyed.");
+}
+
+void AndroidApp::run()
+{
+    // 1. Wait for window to be created.
+    // 2. Take lock.
+    // 3. application->loadResources(rm);
+    bool run_loop = true;
+    while (run_loop)
+    {
+        std::this_thread::sleep_for(std::chrono::seconds(1));
+        this->application->update(*gl_context);
+    }
 }

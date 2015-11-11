@@ -6,13 +6,14 @@
 #define BOMB_SHADERPROGRAM_H
 
 #include <string>
+#include <vector>
 
 #include "GLES3/gl3.h"
 
 class ShaderProgram
 {
 public:
-    ShaderProgram(std::string const& vertex, std::string const& fragment);
+    ShaderProgram(std::vector<unsigned char> const& vertex, std::vector<unsigned char> const& fragment);
 
     void use();
 

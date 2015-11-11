@@ -4,20 +4,23 @@
 
 #include <android/native_activity.h>
 
-#include "AndroidApp.h"
+#include "Application.h"
+#include "GLContext.h"
+#include "ResouceManager.h"
 
+#include <memory>
 
 #ifndef BOMB_BOMBAPPLICATION_H
 #define BOMB_BOMBAPPLICATION_H
 
 
-class BombApplication : public AndroidApp
+class BombApplication : public Application
 {
 public:
-    BombApplication(ANativeActivity * activity);
+    BombApplication();
 
-    void run() override;
-
+    void loadResources(ResourceManager const& resource_manager) override;
+    void update(GLContext const& gl_context) override;
 };
 
 

@@ -7,13 +7,18 @@
 
 #include <android/native_activity.h>
 #include <pthread.h>
+#include "GLContext.h"
+
+#include "Application.h"
+
+#include <memory>
 
 class AndroidApp
 {
 public:
-    AndroidApp(ANativeActivity * activity);
+    AndroidApp(ANativeActivity * activity, std::shared_ptr<Application> app);
 
-    virtual void run() = 0;
+    void run();
 
     void onDestroy();
     void onStart();
@@ -32,6 +37,11 @@ public:
 public:
     friend void startRunLoop(AndroidApp*);
     ANativeActivity * activity;
+    std::shared_ptr<Application> application;
+
+    ANativeWindow * window;
+
+    std::unique_ptr<GLContext> gl_context;
 
 private:
     AInputQueue * input_queue;

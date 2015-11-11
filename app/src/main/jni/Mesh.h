@@ -7,14 +7,18 @@
 
 #include <GLES3/gl3.h>
 
+#include <string>
+
+#include "MeshPart.h"
+
 class Mesh
 {
 public:
-    Mesh();
+    Mesh(std::vector<unsigned char> const& mesh_data);
     ~Mesh();
 
 private:
-    GLuint vao;
+    std::vector<MeshPart> parts;
 };
 
 

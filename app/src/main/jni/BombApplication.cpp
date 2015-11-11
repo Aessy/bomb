@@ -9,32 +9,24 @@
 #include "log.h"
 
 #include "ResouceManager.h"
+#include "Mesh.h"
+#include "ShaderProgram.h"
+#include "GLContext.h"
 
 #include <chrono>
 #include <thread>
 
-AndroidApp * createAndroidApplication(ANativeActivity * activity, void * saved_state, size_t saved_state_size)
-{
-    return new BombApplication(activity);
-}
 
-BombApplication::BombApplication(ANativeActivity *activity)
-    : AndroidApp { activity }
+BombApplication::BombApplication()
+    : Application {}
 { }
 
-void BombApplication::run()
+void BombApplication::loadResources(ResourceManager const &resource_manager)
 {
-    LOGV("Running bomb application");
+    LOGV("Loading bomb application");
+}
 
-    ResourceManager resource_manager(activity);
-    std::string barrel_data = resource_manager.readTextFile("barrel.obj");
-    bool run = true;
-    while (run)
-    {
-        LOGV("tick");
-        std::this_thread::sleep_for(std::chrono::seconds(1));
-        // 1. Poll events.
-        // 2. Update logic.
-        // 3. Render scene
-    }
+void BombApplication::update(GLContext const& context)
+{
+    LOGV("tick");
 }

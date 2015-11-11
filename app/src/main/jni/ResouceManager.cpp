@@ -34,16 +34,31 @@ ResourceManager::ResourceManager(ANativeActivity * activity)
 {
 }
 
-std::string ResourceManager::readTextFile(std::string const &filename)
+Resource ResourceManager::readTextFile(std::string const &filename)
 {
     AAsset * asset_file = AAssetManager_open(asset_manager, filename.c_str(), AASSET_MODE_BUFFER);
     if (!asset_file)
-        return "";
+        return {};
 
-    char const * data = reinterpret_cast<char const*>(AAsset_getBuffer(asset_file));
+    void const * data = AAsset_getBuffer(asset_file);
     auto const size = AAsset_getLength(asset_file);
 
-    std::string text_file(data, data+size);
+    return { data, static_cast<size_t>(size)};
+}
+std::vector<unsigned char> ResourceManager::readFile(std::string const& filename) const
+{
+    AAsset * asset_file = AAssetManager_open(asset_manager, filename.c_str(), AASSET_MODE_BUFFER);
+    if (!asset_file)
+        return {};
 
-    return text_file;
+    unsigned char const * data = reinterpret_cast<const unsigned char*>(AAsset_getBuffer(asset_file));
+    auto const size = AAsset_getLength(asset_file);
+
+    std::vector<unsigned char> file(data, data+size);
+    LOGV("File size: %u", file.size());
+
+    AAsset_close(asset_file);
+
+    return file;
+
 }

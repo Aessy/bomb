@@ -8,14 +8,22 @@
 #include <android/native_activity.h>
 
 #include <string>
+#include <vector>
 
+struct Resource
+{
+    void const * data_ptr;
+    size_t length;
+};
 
 class ResourceManager
 {
 public:
     ResourceManager(ANativeActivity * activity);
 
-    std::string readTextFile(std::string const& filename);
+    Resource readTextFile(std::string const& filename);
+
+    std::vector<unsigned char> readFile(std::string const& filename) const;
 
 private:
     AAssetManager * asset_manager;

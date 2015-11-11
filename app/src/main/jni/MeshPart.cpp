@@ -27,6 +27,8 @@ static std::vector<GLfloat> getVertices(aiMesh const& mesh)
         vertices.push_back(mesh.mVertices[i].y);
         vertices.push_back(mesh.mVertices[i].z);
     }
+
+    return vertices;
 }
 
 MeshPart::MeshPart(aiMesh const& mesh)

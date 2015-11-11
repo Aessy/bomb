@@ -5,13 +5,15 @@
 #include "AndroidApp.h"
 #include "log.h"
 
-extern AndroidApp * createAndroidApplication(ANativeActivity * activity, void * saved_state, size_t saved_state_size);
+#include "BombApplication.h"
+#include <memory>
 
 static AndroidApp * createAndroidApp(ANativeActivity* activity,
                                      void*            saved_state,
                                      size_t           saved_state_size)
 {
-    AndroidApp * android_app = createAndroidApplication(activity, saved_state, saved_state_size);
+    auto app = std::make_shared<BombApplication>();
+    AndroidApp * android_app = new AndroidApp(activity, app);
     startRunLoop(android_app);
 
     return android_app;

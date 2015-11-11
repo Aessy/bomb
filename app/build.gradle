@@ -12,7 +12,7 @@ model {
         cppFlags += "-std=c++11"
         cppFlags += "-Werror"
         cppFlags += "-g"
-        ldLibs    += ["log", "android", "EGL", "GLESv3"]
+        ldLibs    += ["log", "android", "EGL", "GLESv3", "z", "assimp"]
         stl = "gnustl_static"
     }
 
